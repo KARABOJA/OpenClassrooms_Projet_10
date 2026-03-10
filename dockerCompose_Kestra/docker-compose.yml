@@ -32,6 +32,7 @@ services:
       - kestra-data:/app/storage
       - /var/run/docker.sock:/var/run/docker.sock
       - /tmp/kestra-wd:/tmp/kestra-wd
+      - ./../data:/data
     environment:
       KESTRA_CONFIGURATION: |
         datasources:
@@ -64,10 +65,3 @@ services:
       postgres:
         condition: service_started
   
-  duckdb:
-    build:
-      context: ./3_dockerDuckDb
-      additional_contexts:
-        datatomigrate: /data
-    depends_on:
-      - kestra
