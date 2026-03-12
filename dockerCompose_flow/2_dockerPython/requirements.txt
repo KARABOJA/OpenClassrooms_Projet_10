@@ -1,1 +1,0 @@
-python3 py3-pandas py3-openpyxl bash

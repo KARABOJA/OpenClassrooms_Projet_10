@@ -4,16 +4,14 @@ services:
     build:
       context: ./1_dockerDuckDb
     volumes:
-      - ./../data:/data
-    # pour une gestion du flux via Kestra utiliser la ligne suivante
-    command: sh -c "tail -f /dev/null"
+      - ./../data/Flow01:/data/Flow01
   
-  python:
-    build:
-      context: ./2_dockerPython
-    volumes:
-      - ./../data:/data
-    # pour une gestion du flux via Kestra utiliser la ligne suivante
-    #command: sh -c "tail -f /dev/null"
-    depends_on:
-      - duckdb
+  # python:
+  #   build:
+  #     context: ./2_dockerPython
+  #   volumes:
+  #     - ./../data:/data
+  #   # pour une gestion du flux via Kestra utiliser la ligne suivante
+  #   #command: sh -c "tail -f /dev/null"
+  #   depends_on:
+  #     - duckdb

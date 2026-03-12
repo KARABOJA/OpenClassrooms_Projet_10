@@ -18,5 +18,5 @@ RUN apk upgrade
 # install build dependencies and needed tools
 RUN apk add $(cat /requirements/requirements.txt)
 
-# lancer les scripts de migrations (commande remplacée par 'command: sh -c "tail -f /dev/null"' dans docker-compose pour la gestion via Kestra)
-CMD ["bash", "/scripts/scripts.sh"]
+# lancer les scripts de migrations
+#CMD ["bash", "/scripts/scripts.sh"]
