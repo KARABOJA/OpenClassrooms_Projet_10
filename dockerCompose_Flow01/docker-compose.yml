@@ -5,6 +5,8 @@ services:
       context: ./1_dockerDuckDb
     volumes:
       - ./../data/Flow01:/data/Flow01
+    # pour une gestion du flux via Kestra utiliser la ligne suivante
+    command: sh -c "tail -f /dev/null"
   
   # python:
   #   build:
