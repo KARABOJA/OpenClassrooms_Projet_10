@@ -1,8 +1,11 @@
 # utilisation de la version "edge" car c'est le seul à avoir le package DuckDB
-FROM alpine:3.22
+FROM alpine:edge
 
 # Notre répertoire de travail sera la racine du système de fichier du conteneur
 WORKDIR /·
+
+# add "testing" repository for duckdb in alpine (seul repositorie à avoir DuckDB)
+RUN echo 'https://dl-cdn.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositories
 
 # copie des fichiers nécessaires
 COPY /scripts /scripts

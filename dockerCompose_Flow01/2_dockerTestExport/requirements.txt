@@ -1,1 +1,1 @@
-python3 py3-pandas py3-openpyxl py3-pytest bash
+python3 py3-pandas py3-duckdb py3-openpyxl bash

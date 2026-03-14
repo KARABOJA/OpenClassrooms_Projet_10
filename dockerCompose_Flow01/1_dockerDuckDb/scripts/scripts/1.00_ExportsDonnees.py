@@ -10,7 +10,8 @@ liaison = pd.read_excel(path + "Fichier_liaison.xlsx", sheet_name="Sheet1")
 
 # instanciation de la date
 cdt = datetime.now()
-todayDate = '%s/%s/%s' % (cdt.day, cdt.month, cdt.year)
+#todayDate = '%s/%s/%s' % (cdt.day, cdt.month, cdt.year)
+#timeCreate = '%s:%s:%s' % (cdt.hour, cdt.minute, cdt.second)
 
 # export des données dans DuckDb
 conn = duckdb.connect()
@@ -43,17 +44,27 @@ df_combined = pd.concat([df_existing, df_new])
 df_combined.to_excel(hashFiles, index=False)
 
 
-# Ajout d'une colonne date dans les 3 tables
-conn.sql("ALTER TABLE openclassrooms.erp ADD COLUMN dateCreation date;")
-conn.sql("UPDATE openclassrooms.erp set dateCreation='" + todayDate + "';")
+# Ajout des colonnes date et time dans les 3 tables
+# conn.sql("ALTER TABLE openclassrooms.erp ADD COLUMN dateCreation date;")
+# conn.sql("UPDATE openclassrooms.erp set dateCreation='" + todayDate + "';")
+# conn.sql("ALTER TABLE openclassrooms.erp ADD COLUMN timeCreation time;")
+# conn.sql("UPDATE openclassrooms.erp set timeCreation='" + timeCreate + "';")
+conn.sql("ALTER TABLE openclassrooms.erp ADD COLUMN idExport time;")
+conn.sql("UPDATE openclassrooms.erp set idExport='" + str(cdt) + "';")
 
-conn.sql("ALTER TABLE openclassrooms.web ADD COLUMN dateCreation date;")
-conn.sql("UPDATE openclassrooms.web set dateCreation='" + todayDate + "';")
+# conn.sql("ALTER TABLE openclassrooms.web ADD COLUMN dateCreation date;")
+# conn.sql("UPDATE openclassrooms.web set dateCreation='" + todayDate + "';")
+# conn.sql("ALTER TABLE openclassrooms.web ADD COLUMN timeCreation time;")
+# conn.sql("UPDATE openclassrooms.web set timeCreation='" + timeCreate + "';")
+conn.sql("ALTER TABLE openclassrooms.web ADD COLUMN idExport time;")
+conn.sql("UPDATE openclassrooms.web set idExport='" + str(cdt) + "';")
 
-conn.sql("ALTER TABLE openclassrooms.liaison ADD COLUMN dateCreation date;")
-conn.sql("UPDATE openclassrooms.liaison set dateCreation='" + todayDate + "';")
-
-
+# conn.sql("ALTER TABLE openclassrooms.liaison ADD COLUMN dateCreation date;")
+# conn.sql("UPDATE openclassrooms.liaison set dateCreation='" + todayDate + "';")
+# conn.sql("ALTER TABLE openclassrooms.liaison ADD COLUMN timeCreation time;")
+# conn.sql("UPDATE openclassrooms.liaison set timeCreation='" + timeCreate + "';")
+conn.sql("ALTER TABLE openclassrooms.liaison ADD COLUMN idExport time;")
+conn.sql("UPDATE openclassrooms.liaison set idExport='" + str(cdt) + "';")
 
 conn.sql("DETACH openclassrooms")
 conn.close()
