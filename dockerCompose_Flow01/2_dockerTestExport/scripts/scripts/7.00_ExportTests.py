@@ -1,5 +1,6 @@
 import duckdb
 import pandas as pd
+import os
 
 conn = duckdb.connect()
 conn.sql("ATTACH 'openclassrooms.db'")
@@ -18,8 +19,6 @@ path="/data/Flow01/"
 final = pd.read_excel(path + "FichierFinal.xlsx", sheet_name="Sheet1")
 # vinsMillesimes = pd.read_csv(path + "vinsMillesimes.csv")
 
-# Existing Excel file
-testsExport = 'C:\\Users\\TWB\\Desktop\\openClassrooms\\Projet_10\\data\\Flow01\\testsExport.xlsx'
 
 idExport = final[['idExport']].drop_duplicates().iloc[0]["idExport"]
 
@@ -28,16 +27,23 @@ idExport = final[['idExport']].drop_duplicates().iloc[0]["idExport"]
 # todayDate = '%s/%s/%s' % (cdt.day, cdt.month, cdt.year)
 # #The comment `# select de la date` is likely indicating a step where the code is selecting the current date. However, the actual code snippet related to selecting the date is missing in the provided code.
 
+# Excel file
+testsExport = path + 'testsExport.xlsx'
+
 # New data to append
-df_new = conn.sql("SELECT * FROM openclassrooms.resultExtract where idExport = '" + idExport + "' ;").df()
+df_new = conn.sql("SELECT * FROM openclassrooms.resultExtract where idExport = '" + str(idExport) + "' ;").df()
 
+# Export data
+if not os.path.exists(testsExport):
+    df_new.to_excel(testsExport, index=False)
+else :
+    # Read existing data
+    df_existing = pd.read_excel(testsExport)
+    # Append new data
+    df_combined = pd.concat([df_existing, df_new])
+    # Save the combined data to Excel
+    df_combined.to_excel(testsExport, index=False)
 
-# Read existing data
-df_existing = pd.read_excel(testsExport)
-# Append new data
-df_combined = pd.concat([df_existing, df_new])
-# Save the combined data to Excel
-df_combined.to_excel(testsExport, index=False)
 
 
 

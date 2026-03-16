@@ -31,7 +31,7 @@ jointuresIncoherents = final.shape[0] - idWebErp["idJointure"].isin(idLiaison["i
 print(jointuresIncoherents)
 
 # Insertion des données dans DUckDB
-conn.sql("UPDATE openclassrooms.resultExtract SET jointureIncoherentes = '" + str(jointuresIncoherents) + "' where idExport = '"+ idExport + "' ;")
+conn.sql("UPDATE openclassrooms.resultExtract SET jointureIncoherentes = '" + str(jointuresIncoherents) + "' where idExport = '"+ str(idExport) + "' ;")
 
 
 

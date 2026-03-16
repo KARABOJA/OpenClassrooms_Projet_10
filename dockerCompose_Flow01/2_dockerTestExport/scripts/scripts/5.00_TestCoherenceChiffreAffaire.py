@@ -28,7 +28,7 @@ else :
     result = "error"
 
 # Insertion des données dans DUckDB
-conn.sql("UPDATE openclassrooms.resultExtract SET chiffreAffaireApresJointure = " + result + " where idExport = '" + idExport + "' ;")
+conn.sql("UPDATE openclassrooms.resultExtract SET chiffreAffaireApresJointure = " + result + " where idExport = '" + str(idExport) + "' ;")
 
 
 

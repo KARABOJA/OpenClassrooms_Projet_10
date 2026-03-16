@@ -13,7 +13,7 @@ conn.sql("CREATE OR REPLACE TABLE openclassrooms.erpDedoublonnage AS SELECT DIST
 print(conn.sql("SELECT COUNT(*) FROM openclassrooms.erpDedoublonnage;"))
 # Aucun doublon détectés
 #5483
-print(conn.sql("select * from openclassrooms.erpDedoublonnage where product_id = 5483"))
+#print(conn.sql("select * from openclassrooms.erpDedoublonnage where product_id = 5483"))
 
 conn.sql("DETACH openclassrooms")
 conn.close()

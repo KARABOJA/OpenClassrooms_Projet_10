@@ -25,7 +25,7 @@ nbDoublons = final["product_id"].shape[0] - final["product_id"].drop_duplicates(
 nbDoublons = nbDoublons + (final["id_web"].shape[0] - final["id_web"].drop_duplicates().shape[0])
 
 # Insertion des données dans DUckDB
-conn.sql("UPDATE openclassrooms.resultExtract SET nbDoublons = " + str(nbDoublons) + " where idExport = '"+ idExport + "' ;")
+conn.sql("UPDATE openclassrooms.resultExtract SET nbDoublons = " + str(nbDoublons) + " where idExport = '"+ str(idExport) + "' ;")
 
 
 

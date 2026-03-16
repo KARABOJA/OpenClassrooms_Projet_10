@@ -28,7 +28,7 @@ for series_name, series in final.items():
 columnWithNullValue = columnWithNullValue + " - "
 
 # Insertion des données dans DUckDB
-conn.sql("UPDATE openclassrooms.resultExtract SET colValManquantes = '" + columnWithNullValue + "' where idExport = '"+ idExport + "' ;")
+conn.sql("UPDATE openclassrooms.resultExtract SET colValManquantes = '" + columnWithNullValue + "' where idExport = '"+ str(idExport) + "' ;")
 
 
 

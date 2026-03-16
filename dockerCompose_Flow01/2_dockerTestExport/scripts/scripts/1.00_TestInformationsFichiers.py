@@ -26,7 +26,7 @@ hashWeb = hashFiles.loc[hashFiles.shape[0] - 1, "hashFileWeb"]
 hashLiaison = hashFiles.loc[hashFiles.shape[0] - 1, "hashFileLiaison"]
 
 # Insertion des données dans DUckDB
-conn.sql("INSERT INTO openclassrooms.resultExtract VALUES ('" + idExport + "','" + hashErp + "','" + hashWeb + "','" + hashLiaison + "',NULL,NULL,NULL,NULL,NULL,NULL);")
+conn.sql("INSERT INTO openclassrooms.resultExtract VALUES ('" + str(idExport) + "','" + hashErp + "','" + hashWeb + "','" + hashLiaison + "',NULL,NULL,NULL,NULL,NULL,NULL);")
  
 conn.sql("DETACH openclassrooms")
 conn.close()

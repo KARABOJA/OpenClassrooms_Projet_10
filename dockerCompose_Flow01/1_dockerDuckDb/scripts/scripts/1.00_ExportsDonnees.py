@@ -1,6 +1,7 @@
 import pandas as pd
 import duckdb
 from datetime import datetime
+import os
 
 #Récupération des données
 path="/data/Flow01/"
@@ -28,20 +29,24 @@ conn.sql("CREATE TABLE openclassrooms.liaison AS SELECT * FROM read_xlsx('" + pa
 
 
 # Création du hash des tables et insertion dans fichier Excel
-# Existing Excel file
-hashFiles = 'C:\\Users\\TWB\\Desktop\\openClassrooms\\Projet_10\\data\\Flow01\\hashFiles.xlsx'
+# Excel file
+hashFiles = path + 'hashFiles.xlsx'
 # New data to append
-hashErp = conn.sql("SELECT md5(string_agg(openclassrooms.erp::text, '')) FROM openclassrooms.erp);").df().iloc[0].values[0]
-hashWeb = conn.sql("SELECT md5(string_agg(openclassrooms.web::text, '')) FROM openclassrooms.web);").df().iloc[0].values[0]
-hashLiaison = conn.sql("SELECT md5(string_agg(openclassrooms.liaison::text, '')) FROM openclassrooms.liaison);").df().iloc[0].values[0]
-new_data = {'hashFileErp': [hashErp], 'hashFileWeb': [hashWeb], 'hashFileLiaison': [hashLiaison], 'date': [todayDate]}
+hashErp = conn.sql("SELECT md5(string_agg(openclassrooms.erp::text, '')) FROM openclassrooms.erp;").df().iloc[0].values[0]
+hashWeb = conn.sql("SELECT md5(string_agg(openclassrooms.web::text, '')) FROM openclassrooms.web;").df().iloc[0].values[0]
+hashLiaison = conn.sql("SELECT md5(string_agg(openclassrooms.liaison::text, '')) FROM openclassrooms.liaison;").df().iloc[0].values[0]
+new_data = {'hashFileErp': [hashErp], 'hashFileWeb': [hashWeb], 'hashFileLiaison': [hashLiaison]}
 df_new = pd.DataFrame(new_data)
-# Read existing data
-df_existing = pd.read_excel(hashFiles)
-# Append new data
-df_combined = pd.concat([df_existing, df_new])
-# Save the combined data to Excel
-df_combined.to_excel(hashFiles, index=False)
+
+if not os.path.exists(hashFiles):
+    df_new.to_excel(hashFiles, index=False)
+else :
+    # Read existing data
+    df_existing = pd.read_excel(hashFiles)
+    # Append new data
+    df_combined = pd.concat([df_existing, df_new])
+    # Save the combined data to Excel
+    df_combined.to_excel(hashFiles, index=False)
 
 
 # Ajout des colonnes date et time dans les 3 tables
@@ -49,21 +54,21 @@ df_combined.to_excel(hashFiles, index=False)
 # conn.sql("UPDATE openclassrooms.erp set dateCreation='" + todayDate + "';")
 # conn.sql("ALTER TABLE openclassrooms.erp ADD COLUMN timeCreation time;")
 # conn.sql("UPDATE openclassrooms.erp set timeCreation='" + timeCreate + "';")
-conn.sql("ALTER TABLE openclassrooms.erp ADD COLUMN idExport time;")
+conn.sql("ALTER TABLE openclassrooms.erp ADD COLUMN idExport datetime;")
 conn.sql("UPDATE openclassrooms.erp set idExport='" + str(cdt) + "';")
 
 # conn.sql("ALTER TABLE openclassrooms.web ADD COLUMN dateCreation date;")
 # conn.sql("UPDATE openclassrooms.web set dateCreation='" + todayDate + "';")
 # conn.sql("ALTER TABLE openclassrooms.web ADD COLUMN timeCreation time;")
 # conn.sql("UPDATE openclassrooms.web set timeCreation='" + timeCreate + "';")
-conn.sql("ALTER TABLE openclassrooms.web ADD COLUMN idExport time;")
+conn.sql("ALTER TABLE openclassrooms.web ADD COLUMN idExport datetime;")
 conn.sql("UPDATE openclassrooms.web set idExport='" + str(cdt) + "';")
 
 # conn.sql("ALTER TABLE openclassrooms.liaison ADD COLUMN dateCreation date;")
 # conn.sql("UPDATE openclassrooms.liaison set dateCreation='" + todayDate + "';")
 # conn.sql("ALTER TABLE openclassrooms.liaison ADD COLUMN timeCreation time;")
 # conn.sql("UPDATE openclassrooms.liaison set timeCreation='" + timeCreate + "';")
-conn.sql("ALTER TABLE openclassrooms.liaison ADD COLUMN idExport time;")
+conn.sql("ALTER TABLE openclassrooms.liaison ADD COLUMN idExport datetime;")
 conn.sql("UPDATE openclassrooms.liaison set idExport='" + str(cdt) + "';")
 
 conn.sql("DETACH openclassrooms")

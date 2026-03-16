@@ -34,8 +34,8 @@ else :
     resultFinal = "error"
     
 # Insertion des données dans DUckDB
-conn.sql("UPDATE openclassrooms.resultExtract SET ZscoreErpMillesimes = " + resultErp + " where idExport = '"+ idExport + "' ;")
-conn.sql("UPDATE openclassrooms.resultExtract SET ZscoreApresJointureMillesimes = " + resultFinal + " where idExport = '"+ idExport + "' ;")
+conn.sql("UPDATE openclassrooms.resultExtract SET ZscoreErpMillesimes = " + resultErp + " where idExport = '"+ str(idExport) + "' ;")
+conn.sql("UPDATE openclassrooms.resultExtract SET ZscoreApresJointureMillesimes = " + resultFinal + " where idExport = '"+ str(idExport) + "' ;")
 
 
 
