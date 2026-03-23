@@ -60,7 +60,7 @@ conn.sql("UPDATE openclassrooms.webDedoublonnage set total_sales='87' where sku 
 conn.sql("UPDATE openclassrooms.webDedoublonnage set total_sales='96' where sku = '7818';")
 # 16416 : 2 - 62  ----- 62 * 16.60
 conn.sql("UPDATE openclassrooms.webDedoublonnage set total_sales='62' where sku = '16416';")
-
+### Garder les plus grandes valeurs des quantités vendus en enlevant les doubnlons
 
 # Suppréssion des doublons selon le sku
 conn.sql("CREATE OR REPLACE TABLE openclassrooms.webDedoublonnage AS SELECT DISTINCT ON(sku) * FROM openclassrooms.webDedoublonnage")

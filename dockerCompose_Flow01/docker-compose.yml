@@ -6,7 +6,7 @@ services:
     volumes:
       - ./../data/Flow01:/data/Flow01
     # pour une gestion du flux via Kestra utiliser la ligne suivante
-    #command: sh -c "tail -f /dev/null"
+    command: sh -c "tail -f /dev/null"
   
   testexport:
     build:
@@ -14,8 +14,8 @@ services:
     volumes:
       - ./../data/Flow01:/data/Flow01
     # pour une gestion du flux via Kestra utiliser la ligne suivante
-    #command: sh -c "tail -f /dev/null"
-    depends_on:
-      duckdb:
-        condition: service_completed_successfully
+    command: sh -c "tail -f /dev/null"
+    # depends_on:
+    #   duckdb:
+    #     condition: service_completed_successfully
   
